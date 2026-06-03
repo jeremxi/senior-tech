@@ -94,14 +94,13 @@
 
     /* ─── HORIZONTAL SCROLL WRAPPER ──────────────── */
     #h-scroll-wrapper {
-      position: relative;
-      /* height set by JS */
+      overflow: hidden;
     }
     #h-scroll-track {
       display: flex;
-      position: sticky; top: 0;
-      width: 100vw; height: 100vh;
-      overflow: hidden;
+      width: 500vw; /* PANEL_COUNT * 100vw */
+      height: 100vh;
+      will-change: transform;
     }
 
     /* ─── PANELS ─────────────────────────────────── */
@@ -950,13 +949,6 @@
     let currentPanel = 0;
     const revealedPanels = new Set();
 
-    /* ── Set wrapper height ───────────────────── */
-    function setWrapperHeight() {
-      wrapper.style.height = (PANEL_COUNT * 100) + 'vh';
-    }
-    setWrapperHeight();
-    window.addEventListener('resize', setWrapperHeight);
-
     /* ── Per-panel reveal (triggered on panel entry) ── */
     function triggerReveal(index) {
       if (revealedPanels.has(index)) return;
@@ -977,14 +969,17 @@
     }
 
     /* ── Main horizontal scroll animation ─────── */
-    const hScrollTl = gsap.timeline({
+    gsap.to(track, {
+      x: () => -(PANEL_COUNT - 1) * window.innerWidth,
+      ease: 'none',
       scrollTrigger: {
         trigger: wrapper,
         start: 'top top',
-        end: () => '+=' + (PANEL_COUNT - 1) * window.innerHeight,
-        scrub: 0.8,
-        pin: track,
+        end: () => '+=' + (PANEL_COUNT - 1) * window.innerWidth,
+        scrub: 1,
+        pin: true,
         anticipatePin: 1,
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
           const progress = self.progress;
           const panel = Math.round(progress * (PANEL_COUNT - 1));
@@ -994,11 +989,6 @@
           scrollHint.style.opacity = progress > 0.02 ? '0' : '1';
         }
       }
-    });
-
-    hScrollTl.to(track, {
-      x: () => -(PANEL_COUNT - 1) * window.innerWidth,
-      ease: 'none',
     });
 
     /* Reveal panel 0 immediately on load */
