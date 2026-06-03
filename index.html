@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SeniorTech Services — Maintenance & Sérénité pour vos résidents connectés</title>
+  <meta name="description" content="Le premier service externe d'installation et de maintenance technique dédié aux outils connectés pour seniors en établissement et à domicile." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            navy:    { 50: '#f0f4fa', 100: '#dce6f4', 200: '#b3c8e8', 300: '#7aa4d6', 400: '#4a7fc0', 500: '#2b5fa8', 600: '#1e4a8a', 700: '#163870', 800: '#0f2a55', 900: '#0a1e3d' },
+            sage:    { 50: '#f3f7f4', 100: '#e3ede6', 200: '#c1d9c8', 300: '#93bfa0', 400: '#5e9e72', 500: '#3d7d54', 600: '#2d6340', 700: '#234d32', 800: '#1a3b26', 900: '#122b1b' },
+            gold:    { 50: '#fffbf0', 100: '#fef3d0', 200: '#fde49a', 300: '#fbd060', 400: '#f8b830', 500: '#e89e10', 600: '#c07e08', 700: '#9a6206', 800: '#7a4d07', 900: '#5e3b09' },
+            cream:   '#fafaf8',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #fafaf8; }
+
+    /* Nav */
+    .nav-link { @apply text-navy-700 hover:text-navy-500 transition-colors duration-200 text-sm font-medium; }
+
+    /* Buttons */
+    .btn-primary {
+      @apply inline-flex items-center gap-2 bg-navy-700 hover:bg-navy-600 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5;
+    }
+    .btn-outline {
+      @apply inline-flex items-center gap-2 border-2 border-navy-700 text-navy-700 hover:bg-navy-700 hover:text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200;
+    }
+    .btn-gold {
+      @apply inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-400 text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-base;
+    }
+    .btn-sage {
+      @apply inline-flex items-center gap-2 bg-sage-600 hover:bg-sage-500 text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-base;
+    }
+
+    /* Cards */
+    .card {
+      @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md hover:-translate-y-1 transition-all duration-300;
+    }
+    .card-service {
+      @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative overflow-hidden;
+    }
+
+    /* Gradient hero */
+    .hero-gradient {
+      background: linear-gradient(135deg, #0a1e3d 0%, #163870 50%, #1e4a8a 100%);
+    }
+
+    /* Pill badge */
+    .badge {
+      @apply inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full;
+    }
+
+    /* Section title */
+    .section-label {
+      @apply text-sage-600 font-semibold text-sm uppercase tracking-widest mb-3;
+    }
+    .section-title {
+      @apply text-3xl md:text-4xl font-bold text-navy-900 leading-tight;
+    }
+    .section-subtitle {
+      @apply text-gray-500 text-lg mt-4 leading-relaxed max-w-2xl;
+    }
+
+    /* Pricing card */
+    .pricing-card {
+      background: linear-gradient(145deg, #163870, #0f2a55);
+      @apply rounded-3xl p-8 md:p-10 text-white shadow-2xl;
+    }
+
+    /* Form */
+    .form-input {
+      @apply w-full border border-gray-200 rounded-xl px-4 py-3 text-navy-900 placeholder-gray-400 focus:outline-none focus:border-navy-400 focus:ring-2 focus:ring-navy-100 transition-all duration-200 bg-white text-sm;
+    }
+    .form-label {
+      @apply block text-sm font-medium text-navy-800 mb-1.5;
+    }
+
+    /* Divider icon */
+    .divider-icon {
+      @apply w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0;
+    }
+
+    /* Scroll animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="antialiased text-navy-900">
+
+  <!-- ══════════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2.5">
+          <div class="w-8 h-8 bg-navy-700 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <span class="font-bold text-navy-800 text-lg tracking-tight">SeniorTech<span class="text-sage-500">.</span></span>
+        </a>
+        <!-- Desktop links -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#constat" class="nav-link">Nos constats</a>
+          <a href="#solutions" class="nav-link">Solutions</a>
+          <a href="#offre" class="nav-link">Tarifs</a>
+          <a href="#pilote" class="nav-link">Projet pilote</a>
+          <a href="#contact" class="btn-primary text-sm py-2 px-5">Nous contacter</a>
+        </div>
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-navy-700 hover:bg-navy-50 transition-colors">
+          <svg id="menu-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="menu-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
+      <div class="px-4 py-4 flex flex-col gap-3">
+        <a href="#constat" class="nav-link py-2">Nos constats</a>
+        <a href="#solutions" class="nav-link py-2">Solutions</a>
+        <a href="#offre" class="nav-link py-2">Tarifs</a>
+        <a href="#pilote" class="nav-link py-2">Projet pilote</a>
+        <a href="#contact" class="btn-primary text-sm text-center mt-2">Nous contacter</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1 — HERO
+  ══════════════════════════════════════════════ -->
+  <section class="hero-gradient pt-24 pb-20 md:pt-32 md:pb-28 relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 -left-12 w-72 h-72 bg-sage-500/10 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/2 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="max-w-3xl">
+        <!-- Pre-headline badge -->
+        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 text-xs font-medium px-4 py-2 rounded-full mb-8 backdrop-blur-sm">
+          <span class="w-1.5 h-1.5 bg-sage-400 rounded-full animate-pulse"></span>
+          Service B2B — EHPAD · Résidences Autonomie · Services à la Personne
+        </div>
+
+        <!-- H1 -->
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-[1.1] tracking-tight mb-6">
+          Libérez votre personnel.<br />
+          <span class="text-gold-300">Sécurisez vos résidents.</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-white/80 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
+          Le premier service externe d'installation et de maintenance technique dédié aux outils connectés pour seniors en établissement et à domicile.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-12">
+          <a href="#pilote" class="btn-gold">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            Demander un projet pilote gratuit
+          </a>
+          <a href="#solutions" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 backdrop-blur-sm">
+            Découvrir nos solutions
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Reassurance strip -->
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-8">
+          <div class="flex items-center gap-2.5 text-white/80 text-sm">
+            <div class="w-7 h-7 bg-sage-500/30 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-sage-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <span><strong class="text-white">Intervention sous 48h</strong> ouvrées garantie</span>
+          </div>
+          <div class="flex items-center gap-2.5 text-white/80 text-sm">
+            <div class="w-7 h-7 bg-gold-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-gold-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+            </div>
+            <span><strong class="text-white">Zéro gestion</strong> de stock pour vos équipes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       CHIFFRES CLÉS (bande entre Hero et Constat)
+  ══════════════════════════════════════════════ -->
+  <div class="bg-white border-y border-gray-100 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
+        <div class="fade-in">
+          <div class="text-3xl font-extrabold text-navy-800">80%</div>
+          <div class="text-sm text-gray-500 mt-1">des outils connectés abandonnés dès la 1ère panne</div>
+        </div>
+        <div class="fade-in">
+          <div class="text-3xl font-extrabold text-navy-800">48h</div>
+          <div class="text-sm text-gray-500 mt-1">délai maximal d'intervention garanti</div>
+        </div>
+        <div class="fade-in">
+          <div class="text-3xl font-extrabold text-sage-600">3</div>
+          <div class="text-sm text-gray-500 mt-1">briques de service complémentaires</div>
+        </div>
+        <div class="fade-in">
+          <div class="text-3xl font-extrabold text-gold-500">0€</div>
+          <div class="text-sm text-gray-500 mt-1">d'engagement pour le projet pilote</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2 — LE CONSTAT (Pain Points)
+  ══════════════════════════════════════════════ -->
+  <section id="constat" class="py-20 md:py-28 bg-navy-900 relative overflow-hidden">
+    <!-- bg decoration -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-navy-800/60 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-80 h-80 bg-sage-900/30 rounded-full translate-y-1/3 -translate-x-1/4 blur-3xl"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center mb-14 fade-in">
+        <span class="badge bg-sage-500/20 text-sage-300 mb-4">Le constat terrain</span>
+        <h2 class="text-3xl md:text-4xl font-bold text-white leading-tight">
+          La technologie devrait aider vos équipes,<br class="hidden md:block" />
+          pas les surcharger.
+        </h2>
+        <p class="text-white/60 text-lg mt-4 max-w-2xl mx-auto leading-relaxed">
+          Trois frictions réelles qui freinent l'adoption des outils connectés dans vos établissements, chaque jour.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Pain 1 -->
+        <div class="fade-in bg-navy-800/50 border border-navy-700/50 rounded-2xl p-8 hover:bg-navy-800 hover:border-navy-600 transition-all duration-300 group">
+          <div class="w-12 h-12 bg-gold-500/15 rounded-xl flex items-center justify-center mb-6 group-hover:bg-gold-500/25 transition-colors">
+            <svg class="w-6 h-6 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">La charge mentale technique</h3>
+          <p class="text-white/60 leading-relaxed text-sm">
+            Vos équipes sont là pour soigner, pas pour configurer des box Wi-Fi ou dépanner des tablettes déconnectées. Chaque incident technique devient une interruption dans leur mission de soin.
+          </p>
+        </div>
+
+        <!-- Pain 2 -->
+        <div class="fade-in bg-navy-800/50 border border-navy-700/50 rounded-2xl p-8 hover:bg-navy-800 hover:border-navy-600 transition-all duration-300 group" style="transition-delay: 100ms">
+          <div class="w-12 h-12 bg-sage-500/15 rounded-xl flex items-center justify-center mb-6 group-hover:bg-sage-500/25 transition-colors">
+            <svg class="w-6 h-6 text-sage-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Le syndrome du placard</h3>
+          <p class="text-white/60 leading-relaxed text-sm">
+            <strong class="text-white/80">80% des outils connectés</strong> achetés par les familles finissent abandonnés à la première panne ou au premier bug. Un investissement perdu, un lien rompu.
+          </p>
+        </div>
+
+        <!-- Pain 3 -->
+        <div class="fade-in bg-navy-800/50 border border-navy-700/50 rounded-2xl p-8 hover:bg-navy-800 hover:border-navy-600 transition-all duration-300 group" style="transition-delay: 200ms">
+          <div class="w-12 h-12 bg-red-500/15 rounded-xl flex items-center justify-center mb-6 group-hover:bg-red-500/25 transition-colors">
+            <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">L'angoisse des familles</h3>
+          <p class="text-white/60 leading-relaxed text-sm">
+            La peur que le lien soit rompu, ou que l'outil de sécurité — bracelet anti-chute, pilulier connecté — ne fonctionne pas en cas de besoin. Une inquiétude quotidienne, pour eux comme pour vous.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3 — CATALOGUE DE SOLUTIONS
+  ══════════════════════════════════════════════ -->
+  <section id="solutions" class="py-20 md:py-28 bg-cream">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 fade-in">
+        <span class="section-label">Catalogue de solutions validées</span>
+        <h2 class="section-title">Trois briques. Une couverture complète.</h2>
+        <p class="section-subtitle mx-auto">
+          Des solutions éprouvées, zéro gestion de stock, et un technicien dédié pour chaque intervention. Vous supervisez, nous intervenons.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-7">
+
+        <!-- Brique 1 : LiNote -->
+        <div class="card-service fade-in group">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-navy-600 to-sage-500 rounded-t-2xl"></div>
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-13 h-13 w-12 h-12 bg-navy-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-navy-100 transition-colors">
+              <svg class="w-6 h-6 text-navy-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="badge bg-navy-50 text-navy-600 text-xs mb-1">Lien Social</span>
+              <h3 class="text-xl font-bold text-navy-900">Tablettes d'appel vidéo</h3>
+              <p class="text-sm text-sage-600 font-medium">LiNote & équivalents</p>
+            </div>
+          </div>
+          <p class="text-gray-600 leading-relaxed text-sm mb-6">
+            Installation et maintien en ligne des tablettes d'appels vidéo automatiques, sans aucune manipulation requise de la part du senior. Le lien familial, préservé en toutes circonstances.
+          </p>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Configuration réseau et Wi-Fi dédiée
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Mise à jour et reconfiguration à distance
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Accompagnement à l'usage pour le personnel
+            </li>
+          </ul>
+        </div>
+
+        <!-- Brique 2 : Medissimo -->
+        <div class="card-service fade-in group" style="transition-delay: 100ms">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sage-500 to-sage-400 rounded-t-2xl"></div>
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-12 h-12 bg-sage-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-sage-100 transition-colors">
+              <svg class="w-6 h-6 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="badge bg-sage-50 text-sage-600 text-xs mb-1">Santé</span>
+              <h3 class="text-xl font-bold text-navy-900">Piluliers intelligents</h3>
+              <p class="text-sm text-sage-600 font-medium">Medissimo & équivalents</p>
+            </div>
+          </div>
+          <p class="text-gray-600 leading-relaxed text-sm mb-6">
+            Suivi technique de la connectivité des piluliers intelligents pour garantir la remontée fiable des alertes de prise de médicaments. Zéro rupture de données, alerte soignante garantie.
+          </p>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Vérification de la connectivité régulière
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Diagnostic et résolution des pannes réseau
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Rapport mensuel de disponibilité
+            </li>
+          </ul>
+        </div>
+
+        <!-- Brique 3 : Anti-Chute -->
+        <div class="card-service fade-in group" style="transition-delay: 200ms">
+          <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-400 to-gold-500 rounded-t-2xl"></div>
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-12 h-12 bg-gold-50 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold-100 transition-colors">
+              <svg class="w-6 h-6 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="badge bg-gold-50 text-gold-600 text-xs mb-1">Sécurité</span>
+              <h3 class="text-xl font-bold text-navy-900">Bracelets anti-chute</h3>
+              <p class="text-sm text-gold-600 font-medium">Détection SOS & chutes</p>
+            </div>
+          </div>
+          <p class="text-gray-600 leading-relaxed text-sm mb-6">
+            Calibrage réseau, gestion des batteries et réglage de la sensibilité des boutons SOS et détecteurs de chutes. Parce qu'un dispositif de sécurité qui ne fonctionne pas est plus dangereux qu'une absence de dispositif.
+          </p>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Calibrage et test de sensibilité des alertes
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Suivi et remplacement de batteries
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              Test des remontées d'alertes vers le personnel
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom note -->
+      <p class="text-center text-sm text-gray-500 mt-10 fade-in">
+        <svg class="w-4 h-4 inline mr-1 text-sage-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Nous intervenons sur toutes les marques et modèles d'outils connectés. Aucun stock requis côté établissement.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4 — OFFRE COMMERCIALE (Tarifs)
+  ══════════════════════════════════════════════ -->
+  <section id="offre" class="py-20 md:py-28 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 fade-in">
+        <span class="section-label">Transparence totale</span>
+        <h2 class="section-title">Une offre. Un prix. Aucune surprise.</h2>
+        <p class="section-subtitle mx-auto">
+          Nous croyons que la confiance se construit sur la clarté. Voici exactement ce que vous obtenez.
+        </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto">
+        <div class="pricing-card fade-in">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+            <!-- Left: Pack info -->
+            <div class="flex-1">
+              <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm font-medium text-white/90 mb-6">
+                <svg class="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                Offre unique — Engagement 12 mois
+              </div>
+              <h3 class="text-3xl md:text-4xl font-extrabold text-white mb-2">Pack Maintenance & Sérénité</h3>
+              <p class="text-white/60 mb-8 text-sm">Par chambre ou par bénéficiaire suivi</p>
+
+              <!-- Inclusions -->
+              <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                  <div class="w-6 h-6 bg-sage-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <p class="text-white/85 text-sm leading-relaxed"><strong class="text-white">Intervention garantie sous 48h ouvrées</strong> — Nous nous engageons sur ce délai, par contrat.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-6 h-6 bg-sage-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <p class="text-white/85 text-sm leading-relaxed"><strong class="text-white">1 déplacement physique inclus / mois</strong> — puis 50 € HT par déplacement supplémentaire.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-6 h-6 bg-sage-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <p class="text-white/85 text-sm leading-relaxed"><strong class="text-white">Hotline technique dédiée</strong> — dans la limite de 3 appels par mois ou du raisonnable.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-6 h-6 bg-sage-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <p class="text-white/85 text-sm leading-relaxed"><strong class="text-white">Suivi et diagnostic à distance</strong> — uniquement si nécessaire, sans surcoût.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Price -->
+            <div class="md:w-64 md:flex-shrink-0">
+              <div class="bg-white/10 border border-white/20 rounded-2xl p-6 text-center backdrop-blur-sm">
+                <p class="text-white/60 text-xs font-medium uppercase tracking-widest mb-1">À partir de</p>
+                <div class="flex items-end justify-center gap-1 my-3">
+                  <span class="text-6xl font-extrabold text-white leading-none">50</span>
+                  <div class="mb-2 text-left">
+                    <span class="text-gold-300 text-xl font-bold">€</span>
+                    <p class="text-white/60 text-xs">HT / mois</p>
+                  </div>
+                </div>
+                <p class="text-white/50 text-xs mb-6">par chambre ou bénéficiaire</p>
+                <a href="#pilote" class="w-full btn-gold justify-center text-sm px-4 py-3">
+                  Démarrer un pilote
+                </a>
+                <p class="text-white/40 text-xs mt-4">Sans engagement pour le pilote</p>
+              </div>
+
+              <!-- Small trust badges -->
+              <div class="mt-4 space-y-2">
+                <div class="flex items-center gap-2 text-white/50 text-xs">
+                  <svg class="w-4 h-4 text-sage-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                  Contrat annuel révisable
+                </div>
+                <div class="flex items-center gap-2 text-white/50 text-xs">
+                  <svg class="w-4 h-4 text-sage-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                  Facturation mensuelle simple
+                </div>
+                <div class="flex items-center gap-2 text-white/50 text-xs">
+                  <svg class="w-4 h-4 text-sage-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                  Données hébergées en France
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5 — OFFRE PILOTE (CTA fort)
+  ══════════════════════════════════════════════ -->
+  <section id="pilote" class="py-16 md:py-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-sage-600 via-sage-700 to-navy-800"></div>
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/4 blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 bg-navy-900/20 rounded-full translate-y-1/2 -translate-x-1/4 blur-3xl"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+      <div class="fade-in">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-white text-sm font-semibold px-5 py-2 rounded-full mb-8 backdrop-blur-sm">
+          <span class="w-2 h-2 bg-gold-300 rounded-full animate-pulse"></span>
+          Opération Lancement — Nouvelle-Aquitaine
+        </div>
+
+        <h2 class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-6">
+          3 établissements.<br />
+          <span class="text-gold-200">2 mois. 5 chambres. 0€.</span>
+        </h2>
+
+        <p class="text-white/80 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+          Nous offrons à <strong class="text-white">3 établissements partenaires</strong> un projet pilote 100% gratuit de 2 mois sur 5 chambres. Testez l'impact sur vos équipes et vos résidents — sans aucun engagement financier.
+        </p>
+
+        <!-- Conditions -->
+        <div class="grid sm:grid-cols-3 gap-4 mb-10 max-w-2xl mx-auto text-left">
+          <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
+            <div class="text-2xl font-extrabold text-white mb-1">2</div>
+            <div class="text-white/70 text-sm">mois de service complet offerts</div>
+          </div>
+          <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
+            <div class="text-2xl font-extrabold text-white mb-1">5</div>
+            <div class="text-white/70 text-sm">chambres ou bénéficiaires couverts</div>
+          </div>
+          <div class="bg-white/10 border border-white/20 rounded-xl p-4 backdrop-blur-sm">
+            <div class="text-2xl font-extrabold text-gold-200 mb-1">0€</div>
+            <div class="text-white/70 text-sm">engagement financier requis</div>
+          </div>
+        </div>
+
+        <a href="#contact" class="btn-gold text-base mx-auto">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Tester l'éligibilité de mon établissement
+        </a>
+        <p class="text-white/50 text-sm mt-4">Places limitées — Offre valable en Nouvelle-Aquitaine uniquement</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6 — FORMULAIRE DE CONTACT
+  ══════════════════════════════════════════════ -->
+  <section id="contact" class="py-20 md:py-28 bg-cream">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+        <!-- Left: Copy -->
+        <div class="fade-in">
+          <span class="section-label">Contact</span>
+          <h2 class="section-title mb-6">Parlons de votre établissement.</h2>
+          <p class="text-gray-500 leading-relaxed mb-8">
+            Remplissez ce formulaire pour nous décrire votre situation. Nous vous rappelons sous 24h ouvrées pour comprendre vos besoins et voir si nous pouvons vous intégrer dans notre programme pilote.
+          </p>
+
+          <!-- Contact trust items -->
+          <div class="space-y-5">
+            <div class="flex items-start gap-4">
+              <div class="divider-icon bg-navy-50">
+                <svg class="w-5 h-5 text-navy-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-navy-800 text-sm">Réponse sous 24h ouvrées</p>
+                <p class="text-gray-500 text-sm">Un interlocuteur dédié vous rappelle pour échanger.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="divider-icon bg-sage-50">
+                <svg class="w-5 h-5 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-navy-800 text-sm">Aucun engagement commercial</p>
+                <p class="text-gray-500 text-sm">Nous vérifions ensemble l'éligibilité au pilote, sans pression.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="divider-icon bg-gold-50">
+                <svg class="w-5 h-5 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-navy-800 text-sm">Conformité RGPD totale</p>
+                <p class="text-gray-500 text-sm">Vos données et celles de vos résidents sont traitées et hébergées en France.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="fade-in">
+          <div class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8">
+            <form id="contact-form" class="space-y-5" novalidate>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="prenom" class="form-label">Prénom <span class="text-red-400">*</span></label>
+                  <input type="text" id="prenom" name="prenom" class="form-input" placeholder="Marie" required />
+                </div>
+                <div>
+                  <label for="nom" class="form-label">Nom <span class="text-red-400">*</span></label>
+                  <input type="text" id="nom" name="nom" class="form-input" placeholder="Dupont" required />
+                </div>
+              </div>
+              <div>
+                <label for="fonction" class="form-label">Fonction <span class="text-red-400">*</span></label>
+                <input type="text" id="fonction" name="fonction" class="form-input" placeholder="Directrice d'établissement, Coordinatrice SAP..." required />
+              </div>
+              <div>
+                <label for="etablissement" class="form-label">Nom de l'établissement / structure <span class="text-red-400">*</span></label>
+                <input type="text" id="etablissement" name="etablissement" class="form-input" placeholder="Résidence Les Pins d'Argent, EHPAD..." required />
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="telephone" class="form-label">Téléphone <span class="text-red-400">*</span></label>
+                  <input type="tel" id="telephone" name="telephone" class="form-input" placeholder="06 00 00 00 00" required />
+                </div>
+                <div>
+                  <label for="email" class="form-label">Email <span class="text-red-400">*</span></label>
+                  <input type="email" id="email" name="email" class="form-input" placeholder="m.dupont@residence.fr" required />
+                </div>
+              </div>
+              <div>
+                <label for="message" class="form-label">Votre situation (optionnel)</label>
+                <textarea id="message" name="message" rows="4" class="form-input resize-none" placeholder="Décrivez les outils connectés que vous utilisez, vos défis actuels, le nombre de résidents concernés..."></textarea>
+              </div>
+
+              <!-- RGPD -->
+              <div class="flex items-start gap-3">
+                <input type="checkbox" id="rgpd" name="rgpd" required class="w-4 h-4 mt-0.5 border-gray-300 rounded text-navy-700 focus:ring-navy-500 flex-shrink-0" />
+                <label for="rgpd" class="text-xs text-gray-500 leading-relaxed">
+                  J'accepte que mes données soient utilisées pour traiter ma demande de contact. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression. <a href="#mentions-legales" class="text-navy-600 underline hover:text-navy-800">En savoir plus.</a>
+                </label>
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" class="w-full btn-sage justify-center">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                Envoyer ma demande d'éligibilité
+              </button>
+
+              <!-- Success message (hidden) -->
+              <div id="form-success" class="hidden bg-sage-50 border border-sage-200 rounded-xl p-4 text-center">
+                <svg class="w-8 h-8 text-sage-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="font-semibold text-sage-700">Demande envoyée avec succès !</p>
+                <p class="text-sage-600 text-sm mt-1">Nous vous recontacterons sous 24h ouvrées.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════ -->
+  <footer class="bg-navy-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="grid md:grid-cols-3 gap-10 mb-10">
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <span class="font-bold text-white text-lg">SeniorTech<span class="text-sage-400">.</span></span>
+          </div>
+          <p class="text-white/50 text-sm leading-relaxed">
+            Le partenaire technique de confiance pour les établissements et services à la personne qui accompagnent les seniors.
+          </p>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <p class="font-semibold text-white/80 text-sm mb-4 uppercase tracking-wider">Navigation</p>
+          <ul class="space-y-2.5">
+            <li><a href="#constat" class="text-white/50 hover:text-white text-sm transition-colors">Nos constats</a></li>
+            <li><a href="#solutions" class="text-white/50 hover:text-white text-sm transition-colors">Nos solutions</a></li>
+            <li><a href="#offre" class="text-white/50 hover:text-white text-sm transition-colors">Tarifs</a></li>
+            <li><a href="#pilote" class="text-white/50 hover:text-white text-sm transition-colors">Projet pilote gratuit</a></li>
+            <li><a href="#contact" class="text-white/50 hover:text-white text-sm transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal & RGPD -->
+        <div id="mentions-legales">
+          <p class="font-semibold text-white/80 text-sm mb-4 uppercase tracking-wider">Légal & Données</p>
+          <div class="space-y-3">
+            <div class="flex items-start gap-2 text-white/50 text-sm">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              <span>Données personnelles hébergées en France, conformément au RGPD (Règlement UE 2016/679).</span>
+            </div>
+            <div class="flex items-start gap-2 text-white/50 text-sm">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              <span>Aucune donnée relative aux résidents n'est transmise à des tiers sans consentement explicite.</span>
+            </div>
+            <div class="flex items-start gap-2 text-white/50 text-sm">
+              <svg class="w-4 h-4 text-sage-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span>Demande de suppression de vos données : <span class="text-white/70">contact@seniortech.fr</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <p class="text-white/30 text-xs">© 2025 SeniorTech Services. Tous droits réservés.</p>
+        <p class="text-white/30 text-xs">Service disponible en Nouvelle-Aquitaine — Extension nationale en cours</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════════════ -->
+  <script>
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOpen = document.getElementById('menu-open');
+    const menuClose = document.getElementById('menu-close');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      menuOpen.classList.toggle('hidden', !isOpen);
+      menuClose.classList.toggle('hidden', isOpen);
+    });
+
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuOpen.classList.remove('hidden');
+        menuClose.classList.add('hidden');
+      });
+    });
+
+    // Scroll fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Form submission (demo)
+    const form = document.getElementById('contact-form');
+    const successMsg = document.getElementById('form-success');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const rgpd = document.getElementById('rgpd');
+      if (!rgpd.checked) {
+        rgpd.style.outline = '2px solid #ef4444';
+        setTimeout(() => rgpd.style.outline = '', 2000);
+        return;
+      }
+      // Simulate send
+      const btn = form.querySelector('button[type=submit]');
+      btn.disabled = true;
+      btn.textContent = 'Envoi en cours…';
+      setTimeout(() => {
+        form.querySelectorAll('input, textarea').forEach(el => el.value = '');
+        rgpd.checked = false;
+        btn.closest('form').querySelectorAll('.space-y-5 > *:not(#form-success)').forEach(el => el.style.display = 'none');
+        successMsg.classList.remove('hidden');
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
